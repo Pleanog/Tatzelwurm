@@ -29,7 +29,7 @@ public class Game {
         collisionTimeHandler = new PeriodicTimerHandler(new Runnable() {
             @Override
             public void run() {
-                // TODO: After finishing Player and Obstacle-Class implement Collision Detection
+                // TODO: After finishing Player and Obstacle-Class: implement Collision Detection
 //                for (Touchable t : _this.Touchables) {
 //                  if (CollisionDetectionHandler.isCollisionDetected(Tatzelwurm, ...)) {
 //                      t.onTouch();
@@ -48,7 +48,7 @@ public class Game {
                 // add ImageView to the activites game view
                 _this.Activity.getGameView().addView(NewObstacle.getTouchableImageView());
             }
-        }, 1000);
+        }, 2000);
     }
 
     public TatzelwurmActivity getActivity() {

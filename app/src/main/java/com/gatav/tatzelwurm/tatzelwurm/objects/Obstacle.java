@@ -13,7 +13,8 @@ public class Obstacle extends Touchable {
         super(CurrentGame);
 
         // setup ImageView
-        int obstacleType = 1 + (int)(Math.random() * ((3 - 1) + 1));
+        // Type will be selected as a number between 0..(X-1)
+        int obstacleType = 1 + (int)(Math.random() * 3);
 
         Drawable currentDrawable;
         switch (obstacleType) {
@@ -29,7 +30,13 @@ public class Obstacle extends Touchable {
         }
 
         super.getTouchableImageView().setImageDrawable(currentDrawable);
+        // TODO: Set possible Y positions
         super.getTouchableImageView().setY(0);
+
+        // setup & start animation to move from left to right
+        float fromX = this.CurrentGame.getActivity().getScreenWidth();
+        float toX = -currentDrawable.getIntrinsicWidth();
+        super.move(fromX, toX);
     }
 
     @Override

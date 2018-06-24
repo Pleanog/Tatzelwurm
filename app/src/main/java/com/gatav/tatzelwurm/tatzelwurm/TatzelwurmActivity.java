@@ -1,9 +1,12 @@
 package com.gatav.tatzelwurm.tatzelwurm;
 
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.WindowManager;
 
 public class TatzelwurmActivity extends AppCompatActivity {
     // Game
@@ -32,6 +35,14 @@ public class TatzelwurmActivity extends AppCompatActivity {
 
         // references current game to use later in inner class calls
         final TatzelwurmActivity _this = this;
+
+        // get screen width & height
+        WindowManager wm = getWindowManager();
+        Display disp = wm.getDefaultDisplay();
+        Point size = new Point();
+        disp.getSize(size);
+        this.screenWidth = size.x;
+        this.screenHeight = size.y;
 
         this.PlayerHead = getResources().getDrawable(R.drawable.head);
         this.PlayerBody = getResources().getDrawable(R.drawable.body);
