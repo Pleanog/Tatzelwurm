@@ -1,9 +1,12 @@
 package com.gatav.tatzelwurm.tatzelwurm;
 
+import android.widget.ImageView;
+
 import com.gatav.tatzelwurm.tatzelwurm.handler.CollisionDetectionHandler;
 import com.gatav.tatzelwurm.tatzelwurm.handler.PeriodicTimerHandler;
 import com.gatav.tatzelwurm.tatzelwurm.objects.Obstacle;
 import com.gatav.tatzelwurm.tatzelwurm.objects.Player;
+import com.gatav.tatzelwurm.tatzelwurm.objects.PlayerPart;
 import com.gatav.tatzelwurm.tatzelwurm.objects.Touchable;
 
 import java.util.LinkedList;
@@ -38,6 +41,7 @@ public class Game {
             }
         }, 1);
 
+        // TODO: make new method for post start animation game startand move obstacleTimeHandler to that method
         obstacleTimeHandler = new PeriodicTimerHandler(new Runnable() {
             @Override
             public void run() {
@@ -49,6 +53,26 @@ public class Game {
                 _this.Activity.getGameView().addView(NewObstacle.getTouchableImageView());
             }
         }, 2000);
+
+        // go!
+        start();
+    }
+
+    /**
+     * start the actual game
+     */
+    public void start() {
+        // setup player
+        this.Tatzelwurm = new Player(this, 10);
+
+        // iterate and add in reverse order for correct z-index of parts
+        LinkedList<PlayerPart> PlayerParts = Tatzelwurm.getParts();
+        for (int i = PlayerParts.size()-1; i >= 0; i--) {
+            this.Activity.getGameView().addView(PlayerParts.get(i).getPartImageView());
+        }
+
+        // go!
+        this.Tatzelwurm.start();
     }
 
     public TatzelwurmActivity getActivity() {
