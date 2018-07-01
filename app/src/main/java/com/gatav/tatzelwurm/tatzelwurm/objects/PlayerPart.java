@@ -3,23 +3,23 @@ package com.gatav.tatzelwurm.tatzelwurm.objects;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.gatav.tatzelwurm.tatzelwurm.Game;
+import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
 
 public class PlayerPart {
     private Game CurrentGame;
     // view
     private ImageView PartImageView;
-    // animation
-    private ObjectAnimator PartAnimation;
+    // continuous animations
+    private ObjectAnimator GravityAnim;
     // position boundaries, in what range is the player able to move vertically
     private int minY = 0;
     private int maxY;
 
     /**
-     * One Part of the Players Body. It can either be the head (0), body (1) or tail (> 1 or < 0)
+     * One Part of the players body. It can either be the head (0), body (1) or tail (> 1 or < 0)
      * @param CurrentGame Current Game Context
      * @param type Sets the drawable. 0 for head, 1 for body > 1 or < 0 for tail
      */
@@ -29,11 +29,16 @@ public class PlayerPart {
         this.PartImageView = new ImageView(CurrentGame.getActivity());
         // set drawable
         // head
+        // TODO: create and change drawables
         if (type == 0) {
             this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerHead);
         }
         // body
         else if (type == 1) {
+            this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerBody);
+        }
+        // arms
+        else if (type == 2) {
             this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerBody);
         }
         // tail
@@ -62,9 +67,10 @@ public class PlayerPart {
      * @param positionX go to x position
      * @param delay sets a delay , which will be added to the default duration
      */
-    public void start(float positionX, int delay) {
+    public void start(float positionX, final int delay) {
         // the tatzelwurm starts with a jump on start
         ObjectAnimator StartAnimJump = ObjectAnimator.ofFloat(this.PartImageView, "Y", this.PartImageView.getY(), this.PartImageView.getY()-150);
+        // TODO: review if the numbers will be set here or anywhere else
         StartAnimJump.setDuration(500+delay);
         StartAnimJump.addListener(new Animator.AnimatorListener() {
             @Override
@@ -106,10 +112,36 @@ public class PlayerPart {
 
         // the tatzelwurm will arrange on screen on start
         ObjectAnimator StartAnimArrangeX = ObjectAnimator.ofFloat(this.PartImageView, "X", this.PartImageView.getX(), positionX);
-        StartAnimArrangeX.setDuration(400 + delay);
+        // TODO: review if the numbers will be set here or anywhere else
+        StartAnimArrangeX.setDuration(250 + delay);
 
         // go!
         StartAnimArrangeX.start();
         StartAnimJump.start();
+    }
+
+    /**
+     * Updates the players moving direction according the current game gravity
+     * @param delay delay needed ro reach the estimated min/max Y-position
+     */
+    public void updateGravity(int delay) {
+        GravityState CurrentGravity = this.CurrentGame.getGravity();
+        // is the gravity decreasing (tatzelwurm is moving up) or normal/increasing (tatzelwurm is moving down fast)?
+        int toPosition = this.CurrentGame.getGravity() == GravityState.DECREASING ? minY : maxY;
+        // TODO: review if the numbers will be set here or anywhere else
+        int duration = (this.CurrentGame.getGravity() == GravityState.INCREASING ? 900 : 2000)+((delay*delay)*5);
+
+        // abort previous animation
+        if (this.GravityAnim != null) {
+            this.GravityAnim.removeAllListeners();
+            this.GravityAnim.cancel();
+        }
+
+        // build up new animation
+        this.GravityAnim = ObjectAnimator.ofFloat(this.PartImageView, "Y", this.PartImageView.getY(), toPosition);
+        this.GravityAnim.setDuration(duration);
+        this.GravityAnim.setInterpolator(new BounceInterpolator());
+
+        this.GravityAnim.start();
     }
 }

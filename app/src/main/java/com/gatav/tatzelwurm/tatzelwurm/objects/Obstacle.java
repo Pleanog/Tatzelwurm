@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.gatav.tatzelwurm.tatzelwurm.Game;
+import com.gatav.tatzelwurm.tatzelwurm.handler.OneShotTimerHandler;
 
 import java.util.LinkedList;
 
@@ -39,8 +40,22 @@ public class Obstacle extends Touchable {
         super.move(fromX, toX);
     }
 
+
+    /**
+     *  if the player gets hit by an obstacles, he loses lifes and is invulnerable for two seconds
+     */
     @Override
     public void onTouch() {
-        CurrentGame.hit(this);
+        if (!this.CurrentGame.isInvulnerable()) {
+            // TODO: Implement losing lifes instead of Syso
+            System.out.println("hit");
+            this.CurrentGame.setInvulnerable(true);
+            new OneShotTimerHandler(new Runnable() {
+                @Override
+                public void run() {
+                    CurrentGame.setInvulnerable(false);
+                }
+            }, 2000);
+        }
     }
 }

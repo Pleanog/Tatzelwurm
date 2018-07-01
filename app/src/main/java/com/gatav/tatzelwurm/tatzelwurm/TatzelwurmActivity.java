@@ -6,7 +6,10 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.WindowManager;
+
+import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
 
 public class TatzelwurmActivity extends AppCompatActivity {
     // Game
@@ -15,9 +18,11 @@ public class TatzelwurmActivity extends AppCompatActivity {
     // Layout
     private ConstraintLayout GameView;
 
-    // Screen Informations
+    // Screen information
     private int screenWidth;
     private int screenHeight;
+    // screen half will be used for player controls
+    private int screenHalf;
 
     // TODO: final public for temporary convenient
     // Drawables
@@ -43,6 +48,7 @@ public class TatzelwurmActivity extends AppCompatActivity {
         disp.getSize(size);
         this.screenWidth = size.x;
         this.screenHeight = size.y;
+        this.screenHalf = this.screenWidth/2;
 
         this.PlayerHead = getResources().getDrawable(R.drawable.head);
         this.PlayerBody = getResources().getDrawable(R.drawable.body);
@@ -61,6 +67,41 @@ public class TatzelwurmActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     /**
+     * Use first half of screen to decrease gravity, other half to increase gravity
+     * no input causes normal gravity
+     * @param event MotionEvent
+     * @return true
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        int eventAction = event.getAction();
+        int eventPosX = (int)event.getX();
+
+        switch (eventAction & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_POINTER_DOWN:
+                // overwrite latest pointer position at multitouch
+                eventPosX = (int)event.getX(event.getPointerCount()-1);
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_UP:
+                if (eventPosX < this.screenHalf) {
+                    this.CurrentGame.setGravity(GravityState.DECREASING);
+                } else {
+                    this.CurrentGame.setGravity(GravityState.INCREASING);
+                }
+                this.CurrentGame.update();
+                break;
+            case MotionEvent.ACTION_UP:
+                this.CurrentGame.setGravity(GravityState.NORMAL);
+                this.CurrentGame.update();
+                break;
+        }
+
+        return true;
+    }
+
     public int getScreenWidth() {
         return this.screenWidth;
     }
@@ -68,7 +109,6 @@ public class TatzelwurmActivity extends AppCompatActivity {
     public int getScreenHeight() {
         return this.screenHeight;
     }
-
 
     public ConstraintLayout getGameView() {
         return this.GameView;

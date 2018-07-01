@@ -1,7 +1,6 @@
 package com.gatav.tatzelwurm.tatzelwurm;
 
-import android.widget.ImageView;
-
+import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
 import com.gatav.tatzelwurm.tatzelwurm.handler.CollisionDetectionHandler;
 import com.gatav.tatzelwurm.tatzelwurm.handler.PeriodicTimerHandler;
 import com.gatav.tatzelwurm.tatzelwurm.objects.Obstacle;
@@ -14,6 +13,10 @@ import java.util.LinkedList;
 public class Game {
     private TatzelwurmActivity Activity;
     private Player Tatzelwurm;
+
+    // game parameters
+    private GravityState Gravity = GravityState.NORMAL;
+    private boolean invulnerable = false;
 
     // all touchable objects - list will be updated asynchronous by multiple PeriodicTimerHandlers
     private LinkedList<Touchable> Touchables = new LinkedList<>();
@@ -33,11 +36,11 @@ public class Game {
             @Override
             public void run() {
                 // TODO: After finishing Player and Obstacle-Class: implement Collision Detection
-//                for (Touchable t : _this.Touchables) {
-//                  if (CollisionDetectionHandler.isCollisionDetected(Tatzelwurm, ...)) {
-//                      t.onTouch();
-//                  }
-//                }
+                for (Touchable t : _this.Touchables) {
+                  if (CollisionDetectionHandler.isCollisionDetected(Tatzelwurm.getHead().getPartImageView(), t.getTouchableImageView())) {
+                      t.onTouch();
+                  }
+                }
             }
         }, 1);
 
@@ -49,7 +52,7 @@ public class Game {
                 Obstacle NewObstacle = new Obstacle(_this);
                 // add to general touchable list
                 Touchables.add(NewObstacle);
-                // add ImageView to the activites game view
+                // add ImageView to the activities game view
                 _this.Activity.getGameView().addView(NewObstacle.getTouchableImageView());
             }
         }, 2000);
@@ -58,12 +61,28 @@ public class Game {
         start();
     }
 
+    public TatzelwurmActivity getActivity() {
+        return this.Activity;
+    }
+
+    public LinkedList<Touchable> getTouchables() {
+        return this.Touchables;
+    }
+
+    public GravityState getGravity() { return this.Gravity; }
+
+    public void setGravity(GravityState gravity) { this.Gravity = gravity; }
+
+    public boolean isInvulnerable() { return this.invulnerable; }
+
+    public void setInvulnerable(boolean invulnerability) { this.invulnerable = invulnerability; }
+
     /**
      * start the actual game
      */
     public void start() {
         // setup player
-        this.Tatzelwurm = new Player(this, 10);
+        this.Tatzelwurm = new Player(this, 16);
 
         // iterate and add in reverse order for correct z-index of parts
         LinkedList<PlayerPart> PlayerParts = Tatzelwurm.getParts();
@@ -75,15 +94,10 @@ public class Game {
         this.Tatzelwurm.start();
     }
 
-    public TatzelwurmActivity getActivity() {
-        return this.Activity;
-    }
-
-    public LinkedList<Touchable> getTouchables() {
-        return this.Touchables;
-    }
-
-    public void hit(Touchable sender) {
-        System.out.println("Hit");
+    /**
+     * Will be called, every time everything will be updated after variuous and current the game states
+     */
+    public void update() {
+        this.Tatzelwurm.updateGravity();
     }
 }
