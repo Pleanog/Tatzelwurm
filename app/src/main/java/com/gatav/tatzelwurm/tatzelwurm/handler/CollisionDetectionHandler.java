@@ -3,8 +3,11 @@ package com.gatav.tatzelwurm.tatzelwurm.handler;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
 
@@ -46,29 +49,29 @@ public class CollisionDetectionHandler {
      * @param y2 second view position in y-axis
      * @return boolean
      */
-    public static boolean isCollisionDetected(View view1, int x1, int y1,
-                                              View view2, int x2, int y2) {
+    public static boolean isCollisionDetected(ImageView view1, int x1, int y1,
+                                              ImageView view2, int x2, int y2) {
 
-        WeakReference<Bitmap> bitmap1 = getViewBitmap(view1);
-        WeakReference<Bitmap> bitmap2 = getViewBitmap(view2);
+        Bitmap bitmap1 = getBitmapFromView(view1);
+        Bitmap bitmap2 = getBitmapFromView(view2);
 
         if (bitmap1 == null || bitmap2 == null) {
             throw new IllegalArgumentException("bitmaps cannot be null");
         }
 
-        Rect bounds1 = new Rect(x1, y1, x1 + bitmap1.get().getWidth(), y1 + bitmap1.get().getHeight());
-        Rect bounds2 = new Rect(x2, y2, x2 + bitmap2.get().getWidth(), y2 + bitmap2.get().getHeight());
+        Rect bounds1 = new Rect(x1, y1, x1 + bitmap1.getWidth(), y1 + bitmap1.getHeight());
+        Rect bounds2 = new Rect(x2, y2, x2 + bitmap2.getWidth(), y2 + bitmap2.getHeight());
 
         if (Rect.intersects(bounds1, bounds2)) {
             Rect collisionBounds = getCollisionBounds(bounds1, bounds2);
             for (int i = collisionBounds.left; i < collisionBounds.right; i++) {
                 for (int j = collisionBounds.top; j < collisionBounds.bottom; j++) {
-                    int bitmap1Pixel = bitmap1.get().getPixel(i - x1, j - y1);
-                    int bitmap2Pixel = bitmap2.get().getPixel(i - x2, j - y2);
+                    int bitmap1Pixel = bitmap1.getPixel(i - x1, j - y1);
+                    int bitmap2Pixel = bitmap2.getPixel(i - x2, j - y2);
                     if (isFilled(bitmap1Pixel) && isFilled(bitmap2Pixel)) {
-                        bitmap1.get().recycle();
+                        bitmap1.recycle();
                         bitmap1 = null;
-                        bitmap2.get().recycle();
+                        bitmap2.recycle();
                         bitmap2 = null;
                         System.gc();
                         return true;
@@ -76,9 +79,9 @@ public class CollisionDetectionHandler {
                 }
             }
         }
-        bitmap1.get().recycle();
+        bitmap1.recycle();
         bitmap1 = null;
-        bitmap2.get().recycle();
+        bitmap2.recycle();
         bitmap2 = null;
         System.gc();
         return false;
@@ -112,25 +115,19 @@ public class CollisionDetectionHandler {
     /**
      * Get a Bitmap from a specified View
      *
-     * @param v View
+     * @param view View
      * @return Bitmap
      */
-    private static WeakReference<Bitmap> getViewBitmap(View v) {
-        if (v.getMeasuredHeight() <= 0) {
-            int specWidth = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-            v.measure(specWidth, specWidth);
-            WeakReference<Bitmap> b = new WeakReference<>(Bitmap.createBitmap(v.getLayoutParams().width, v.getLayoutParams().height,
-                    Bitmap.Config.ARGB_8888));
-            Canvas c = new Canvas(b.get());
-            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
-            v.draw(c);
-            return b;
-        }
-        WeakReference<Bitmap> b = new WeakReference<>(Bitmap.createBitmap(v.getLayoutParams().width,
-                v.getLayoutParams().height, Bitmap.Config.ARGB_8888));
-        Canvas c = new Canvas(b.get());
-        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
-        v.draw(c);
-        return b;
+    private static Bitmap getBitmapFromView(ImageView view) {
+        view.buildDrawingCache();
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getMeasuredWidth(),
+                view.getMeasuredHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        Drawable drawable = view.getDrawable();
+        drawable.draw(canvas);
+        view.draw(canvas);
+        return returnedBitmap;
     }
 }

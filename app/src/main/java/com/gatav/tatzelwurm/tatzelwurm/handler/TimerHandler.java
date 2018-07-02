@@ -17,7 +17,7 @@ public abstract class TimerHandler {
                         try {
                             func.run();
                         } catch (Exception e) {
-                            System.out.println("run method failed: " + e.getMessage());
+                            System.err.println("run method failed: " + e.getMessage());
                         }
                     }
                 });

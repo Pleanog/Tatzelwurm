@@ -49,6 +49,7 @@ public class Obstacle extends Touchable {
         if (!this.CurrentGame.isInvulnerable()) {
             // TODO: Implement losing lifes instead of Syso
             System.out.println("hit");
+            this.CurrentGame.getTatzelwurm().hit();
             this.CurrentGame.setInvulnerable(true);
             new OneShotTimerHandler(new Runnable() {
                 @Override

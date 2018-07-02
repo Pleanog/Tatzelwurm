@@ -1,5 +1,7 @@
 package com.gatav.tatzelwurm.tatzelwurm;
 
+import android.widget.ImageView;
+
 import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
 import com.gatav.tatzelwurm.tatzelwurm.handler.CollisionDetectionHandler;
 import com.gatav.tatzelwurm.tatzelwurm.handler.PeriodicTimerHandler;
@@ -32,17 +34,23 @@ public class Game {
         // references current game to use later in inner class calls
         final Game _this = this;
 
+        // Collision Detection, every 17 ms, because (1/60fps)*1000=16.67 ms
         collisionTimeHandler = new PeriodicTimerHandler(new Runnable() {
             @Override
             public void run() {
-                // TODO: After finishing Player and Obstacle-Class: implement Collision Detection
-                for (Touchable t : _this.Touchables) {
-                  if (CollisionDetectionHandler.isCollisionDetected(Tatzelwurm.getHead().getPartImageView(), t.getTouchableImageView())) {
-                      t.onTouch();
-                  }
+                if (_this.Tatzelwurm.getLifes() > 0) {
+                    // TODO: After finishing Player and Obstacle-Class: implement Collision Detection
+                    for (Touchable t : _this.Touchables) {
+                        ImageView HeadIV = Tatzelwurm.getHead().getPartImageView();
+                        ImageView HitTouchableIV = t.getTouchableImageView();
+
+                        if (CollisionDetectionHandler.isCollisionDetected(HeadIV, (int)HeadIV.getX(), (int)HeadIV.getY(), HitTouchableIV, (int)HitTouchableIV.getX(), (int)HitTouchableIV.getY())) {
+                            t.onTouch();
+                        }
+                    }
                 }
             }
-        }, 1);
+        }, 17);
 
         // TODO: make new method for post start animation game startand move obstacleTimeHandler to that method
         obstacleTimeHandler = new PeriodicTimerHandler(new Runnable() {
@@ -64,6 +72,8 @@ public class Game {
     public TatzelwurmActivity getActivity() {
         return this.Activity;
     }
+
+    public Player getTatzelwurm() { return this.Tatzelwurm; }
 
     public LinkedList<Touchable> getTouchables() {
         return this.Touchables;

@@ -144,4 +144,10 @@ public class PlayerPart {
 
         this.GravityAnim.start();
     }
+
+    public void die() {
+        // TODO: Death Animation
+        this.PartImageView = null;
+        this.GravityAnim = null;
+    }
 }

@@ -2,6 +2,7 @@ package com.gatav.tatzelwurm.tatzelwurm.objects;
 
 import android.drm.DrmStore;
 import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
 
 import com.gatav.tatzelwurm.tatzelwurm.Game;
 
@@ -37,6 +38,8 @@ public class Player {
         return this.Parts;
     }
 
+    public int getLifes() { return this.Parts.size(); }
+
     public void start() {
         // TODO: review if the numbers will be set here or anywhere else
         int delay = 300;
@@ -59,4 +62,12 @@ public class Player {
         }
     }
 
+    public void hit() {
+        for (int i = 0; i < 4; i++) {
+            PlayerPart DyingPart = this.Parts.get(0);
+            this.Parts.remove(0);
+            this.CurrentGame.getActivity().getGameView().removeView(DyingPart.getPartImageView());
+            DyingPart.die();
+        }
+    }
 }
