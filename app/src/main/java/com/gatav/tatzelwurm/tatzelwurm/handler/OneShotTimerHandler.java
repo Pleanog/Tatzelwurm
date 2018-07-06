@@ -8,7 +8,7 @@ public class OneShotTimerHandler extends TimerHandler {
         super(func, time);
     }
 
-    protected void schedule(Timer timer, TimerTask doAsynchronousTask, int time) {
-        timer.schedule(doAsynchronousTask, time);
+    public void schedule(int time) {
+        timer.schedule(this.AsynchronousTask, time);
     }
 }

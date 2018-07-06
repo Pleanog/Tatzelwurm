@@ -10,7 +10,7 @@ public class PeriodicTimerHandler extends TimerHandler {
         super(func, time);
     }
 
-    protected void schedule(Timer timer, TimerTask doAsynchronousTask, int time) {
-        timer.schedule(doAsynchronousTask, 0, time);
+    public void schedule(int time) {
+        this.timer.schedule(this.AsynchronousTask, 0, time);
     }
 }
