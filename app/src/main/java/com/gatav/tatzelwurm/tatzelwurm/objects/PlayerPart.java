@@ -29,7 +29,7 @@ public class PlayerPart {
         this.PartImageView = new ImageView(CurrentGame.getActivity());
         // set drawable
         // head
-        // TODO: create and change drawables
+        // TODO: create and change drawables // Sorry mache ich noch lol
         if (type == 0) {
             this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerHead);
         }
@@ -70,7 +70,6 @@ public class PlayerPart {
     public void start(float positionX, final int delay) {
         // the tatzelwurm starts with a jump on start
         ObjectAnimator StartAnimJump = ObjectAnimator.ofFloat(this.PartImageView, "Y", this.PartImageView.getY(), this.PartImageView.getY()-150);
-        // TODO: review if the numbers will be set here or anywhere else
         StartAnimJump.setDuration(500+delay);
         StartAnimJump.addListener(new Animator.AnimatorListener() {
             @Override
@@ -128,7 +127,6 @@ public class PlayerPart {
         GravityState CurrentGravity = this.CurrentGame.getGravity();
         // is the gravity decreasing (tatzelwurm is moving up) or normal/increasing (tatzelwurm is moving down fast)?
         int toPosition = this.CurrentGame.getGravity() == GravityState.DECREASING ? minY : maxY;
-        // TODO: review if the numbers will be set here or anywhere else
         int duration = (this.CurrentGame.getGravity() == GravityState.INCREASING ? 900 : 2000)+((delay*delay)*5);
 
         // abort previous animation

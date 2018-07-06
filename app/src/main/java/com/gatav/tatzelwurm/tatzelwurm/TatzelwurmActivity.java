@@ -102,9 +102,7 @@ public class TatzelwurmActivity extends AppCompatActivity {
         return true;
     }
 
-    public int getScreenWidth() {
-        return this.screenWidth;
-    }
+    public int getScreenWidth()  { return this.screenWidth; }
 
     public int getScreenHeight() {
         return this.screenHeight;

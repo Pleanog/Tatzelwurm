@@ -19,6 +19,7 @@ public class Game {
     // game parameters
     private GravityState Gravity = GravityState.NORMAL;
     private boolean invulnerable = false;
+    private int difficulty = 1; // for "movementspeed" = ObstacleDelay , etc
 
     // all touchable objects - list will be updated asynchronous by multiple PeriodicTimerHandlers
     private LinkedList<Touchable> Touchables = new LinkedList<>();

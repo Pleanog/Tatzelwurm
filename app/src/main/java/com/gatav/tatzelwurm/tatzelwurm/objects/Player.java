@@ -41,7 +41,6 @@ public class Player {
     public int getLifes() { return this.Parts.size(); }
 
     public void start() {
-        // TODO: review if the numbers will be set here or anywhere else
         int delay = 300;
         int i = delay/this.Parts.size();
         // start position on screen

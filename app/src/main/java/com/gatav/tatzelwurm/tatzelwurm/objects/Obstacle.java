@@ -7,6 +7,7 @@ import com.gatav.tatzelwurm.tatzelwurm.Game;
 import com.gatav.tatzelwurm.tatzelwurm.handler.OneShotTimerHandler;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Obstacle extends Touchable {
 
@@ -31,24 +32,35 @@ public class Obstacle extends Touchable {
         }
 
         super.getTouchableImageView().setImageDrawable(currentDrawable);
-        // TODO: Set possible Y positions
-        super.getTouchableImageView().setY(0);
+
+        /**Sets the Alignment of the currentDrawable to the top#
+         *  = 0
+        * or the bottom = screenHeight - currentDrawableHeight of the screen
+        */
+         Random topOrBottom = new Random();
+         //TODO Make slight changes in the positions of the obstacles to make the levels even more random
+        int obstacleAlignmentPosition = 0;
+        if (topOrBottom.nextBoolean()){
+            obstacleAlignmentPosition = (this.CurrentGame.getActivity().getScreenHeight()) - (currentDrawable.getIntrinsicHeight());
+        }
+        System.out.println("Obstacle-Y-Position  " + obstacleAlignmentPosition);
+        super.getTouchableImageView().setY(obstacleAlignmentPosition);
 
         // setup & start animation to move from left to right
         float fromX = this.CurrentGame.getActivity().getScreenWidth();
         float toX = -currentDrawable.getIntrinsicWidth();
+
         super.move(fromX, toX);
     }
 
 
     /**
      *  if the player gets hit by an obstacles, he loses lifes and is invulnerable for two seconds
+     *  loosing lifes = getting shorter in physical size
      */
     @Override
     public void onTouch() {
         if (!this.CurrentGame.isInvulnerable()) {
-            // TODO: Implement losing lifes instead of Syso
-            System.out.println("hit");
             this.CurrentGame.getTatzelwurm().hit();
             this.CurrentGame.setInvulnerable(true);
             new OneShotTimerHandler(new Runnable() {
