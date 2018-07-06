@@ -43,7 +43,7 @@ public class Obstacle extends Touchable {
         if (topOrBottom.nextBoolean()){
             obstacleAlignmentPosition = (this.CurrentGame.getActivity().getScreenHeight()) - (currentDrawable.getIntrinsicHeight());
         }
-        System.out.println("Obstacle-Y-Position  " + obstacleAlignmentPosition);
+        
         super.getTouchableImageView().setY(obstacleAlignmentPosition);
 
         // setup & start animation to move from left to right

@@ -1,15 +1,18 @@
 package com.gatav.tatzelwurm.tatzelwurm;
 
+import android.animation.ObjectAnimator;
 import android.widget.ImageView;
 
 import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
 import com.gatav.tatzelwurm.tatzelwurm.handler.CollisionDetectionHandler;
+import com.gatav.tatzelwurm.tatzelwurm.handler.OneShotTimerHandler;
 import com.gatav.tatzelwurm.tatzelwurm.handler.PeriodicTimerHandler;
 import com.gatav.tatzelwurm.tatzelwurm.objects.Obstacle;
 import com.gatav.tatzelwurm.tatzelwurm.objects.Player;
 import com.gatav.tatzelwurm.tatzelwurm.objects.PlayerPart;
 import com.gatav.tatzelwurm.tatzelwurm.objects.Touchable;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Game {
@@ -20,11 +23,12 @@ public class Game {
     private GravityState Gravity = GravityState.NORMAL;
     private boolean controlLocked = true;
     private boolean invulnerable = false;
-    private int difficulty = 1; // for "movementspeed" = ObstacleDelay , etc
+    private int difficulty = 1;
 
     // all touchable objects - list will be updated asynchronous by multiple PeriodicTimerHandlers
     private LinkedList<Touchable> Touchables = new LinkedList<>();
     private PeriodicTimerHandler obstacleTimeHandler;
+    private PeriodicTimerHandler difficultyTimeHandler;
     private PeriodicTimerHandler collisionTimeHandler;
 
     /**
@@ -41,7 +45,6 @@ public class Game {
             @Override
             public void run() {
                 if (_this.Tatzelwurm.getLifes() > 0) {
-                    // TODO: After finishing Player and Obstacle-Class: implement Collision Detection
                     for (Touchable t : _this.Touchables) {
                         ImageView HeadIV = Tatzelwurm.getHead().getPartImageView();
                         ImageView HitTouchableIV = t.getTouchableImageView();
@@ -98,7 +101,7 @@ public class Game {
     }
 
     /**
-     * Here begins the actual game for the player with obstacles and such. this method will be called after start() finished with its animations.
+     * here begins the actual game for the player with obstacles and such. this method will be called after start() finished with its animations.
      */
     public void postStart() {
         // references current game to use later in inner class calls
@@ -111,22 +114,62 @@ public class Game {
         obstacleTimeHandler = new PeriodicTimerHandler(new Runnable() {
             @Override
             public void run() {
-                // create new obstacle the parameters will be initialised in class
-                Obstacle NewObstacle = new Obstacle(_this);
-                // add to general touchable list
-                Touchables.add(NewObstacle);
-                // add ImageView to the activities game view
-                _this.Activity.getGameView().addView(NewObstacle.getTouchableImageView());
+                // get last obstacle to avoid collision, which would make the game impossible
+                ImageView LastObstacleIV = null;
+                for(Iterator it = _this.Touchables.descendingIterator(); it.hasNext();) {
+                    Object t = it.next();
+                    if (t instanceof Obstacle) {
+                        LastObstacleIV = ((Obstacle) t).getTouchableImageView();
+                        break;
+                    }
+                }
+
+                // calc minimum gap and actual gap to make the game possible to beat
+                boolean gapOk = false;
+                if (LastObstacleIV != null) {
+                    int minGap = LastObstacleIV.getWidth() + Tatzelwurm.getHead().getPartImageView().getWidth() + 50;
+                    float gap = _this.getActivity().getScreenWidth() - LastObstacleIV.getX();
+                    gapOk = minGap < gap;
+                }
+
+                if (LastObstacleIV == null || gapOk) {
+                    // create new obstacle with  running animation. The parameters will be initialised in class.
+                    Obstacle NewObstacle = new Obstacle(_this);
+                    // add to general touchable list
+                    Touchables.add(NewObstacle);
+                    // add ImageView to the activities game view
+                    _this.Activity.getGameView().addView(NewObstacle.getTouchableImageView());
+                }
             }
         }, 2000);
+
+        // the difficulty will be increased every x ms
+        _this.difficultyTimeHandler = new PeriodicTimerHandler(new Runnable() {
+            @Override
+            public void run() {
+                _this.incDifficulty();
+            }
+        }, 4000);
     }
 
     /**
-     * Will be called, every time everything will be updated after variuous and current the game states
+     * will be called, every time everything will be updated after variuous and current the game states
      */
     public void update() {
         if (!this.controlLocked) {
             this.Tatzelwurm.updateGravity();
+        }
+    }
+
+    /**
+     * increases the difficulty and shortens the periodic time for obstacles
+     */
+    public void incDifficulty() {
+        this.difficulty++;
+        int newDifficulty = difficulty*100;
+
+        if (newDifficulty < 1200) {
+           this.obstacleTimeHandler.schedule(2000 - newDifficulty);
         }
     }
 }

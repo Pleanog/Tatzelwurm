@@ -57,7 +57,7 @@ public class TatzelwurmActivity extends AppCompatActivity {
         this.PlayerGrowHeadAnim = (AnimationDrawable)getResources().getDrawable(R.drawable.growhead);
         this.ObstacleBig = getResources().getDrawable(R.drawable.obstacle_big);
         this.ObstacleMedium = getResources().getDrawable(R.drawable.obstacle_medium);
-        this.ObstacleSmall = getResources().getDrawable(R.drawable.archer2);
+        this.ObstacleSmall = getResources().getDrawable(R.drawable.obstacle_small);
 
         // get game view and call post render method
         GameView = findViewById(R.id.gameView);
