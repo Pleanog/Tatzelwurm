@@ -18,6 +18,7 @@ public class Game {
 
     // game parameters
     private GravityState Gravity = GravityState.NORMAL;
+    private boolean controlLocked = true;
     private boolean invulnerable = false;
     private int difficulty = 1; // for "movementspeed" = ObstacleDelay , etc
 
@@ -53,19 +54,6 @@ public class Game {
             }
         }, 17);
 
-        // TODO: make new method for post start animation game startand move obstacleTimeHandler to that method
-        obstacleTimeHandler = new PeriodicTimerHandler(new Runnable() {
-            @Override
-            public void run() {
-                // create new obstacle the parameters will be initialised in class
-                Obstacle NewObstacle = new Obstacle(_this);
-                // add to general touchable list
-                Touchables.add(NewObstacle);
-                // add ImageView to the activities game view
-                _this.Activity.getGameView().addView(NewObstacle.getTouchableImageView());
-            }
-        }, 2000);
-
         // go!
         start();
     }
@@ -83,6 +71,10 @@ public class Game {
     public GravityState getGravity() { return this.Gravity; }
 
     public void setGravity(GravityState gravity) { this.Gravity = gravity; }
+
+    public boolean isControlLocked() { return this.controlLocked; }
+
+    public void setControlLocked(boolean controlLock) { this.controlLocked = controlLock; }
 
     public boolean isInvulnerable() { return this.invulnerable; }
 
@@ -106,9 +98,35 @@ public class Game {
     }
 
     /**
+     * Here begins the actual game for the player with obstacles and such. this method will be called after start() finished with its animations.
+     */
+    public void postStart() {
+        // references current game to use later in inner class calls
+        final Game _this = this;
+
+        // unlocks the control lock
+        this.controlLocked = false;
+
+        // now the obstacles will be created
+        obstacleTimeHandler = new PeriodicTimerHandler(new Runnable() {
+            @Override
+            public void run() {
+                // create new obstacle the parameters will be initialised in class
+                Obstacle NewObstacle = new Obstacle(_this);
+                // add to general touchable list
+                Touchables.add(NewObstacle);
+                // add ImageView to the activities game view
+                _this.Activity.getGameView().addView(NewObstacle.getTouchableImageView());
+            }
+        }, 2000);
+    }
+
+    /**
      * Will be called, every time everything will be updated after variuous and current the game states
      */
     public void update() {
-        this.Tatzelwurm.updateGravity();
+        if (!this.controlLocked) {
+            this.Tatzelwurm.updateGravity();
+        }
     }
 }

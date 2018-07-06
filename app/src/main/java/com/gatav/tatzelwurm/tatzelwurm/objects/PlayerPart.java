@@ -2,11 +2,15 @@ package com.gatav.tatzelwurm.tatzelwurm.objects;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.graphics.drawable.AnimationDrawable;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 
 import com.gatav.tatzelwurm.tatzelwurm.Game;
 import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
+
+import java.util.Random;
 
 public class PlayerPart {
     private Game CurrentGame;
@@ -67,14 +71,17 @@ public class PlayerPart {
      * @param positionX go to x position
      * @param delay sets a delay , which will be added to the default duration
      */
-    public void start(float positionX, final int delay) {
+    public void start(float positionX, final int delay, final boolean isLastPart) {
+        // references current player part to use later in inner class calls
+        final PlayerPart _this = this;
+
         // the tatzelwurm starts with a jump on start
         ObjectAnimator StartAnimJump = ObjectAnimator.ofFloat(this.PartImageView, "Y", this.PartImageView.getY(), this.PartImageView.getY()-150);
         StartAnimJump.setDuration(500+delay);
         StartAnimJump.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                // TODO: Lock touch control
+                _this.CurrentGame.setControlLocked(true);
             }
 
             @Override
@@ -84,29 +91,35 @@ public class PlayerPart {
                 StartAnimJumpFall.setInterpolator(new BounceInterpolator());
                 StartAnimJumpFall.addListener(new Animator.AnimatorListener() {
                     @Override
-                    public void onAnimationStart(Animator animation) {}
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        // TODO: Unlock touch control
-                        // TODO: make new method for post start animation game start and and start this method there
+                    public void onAnimationStart(Animator animation) {
                     }
 
                     @Override
-                    public void onAnimationCancel(Animator animation) {}
+                    public void onAnimationEnd(Animator animation) {
+                        if (isLastPart) {
+                            _this.CurrentGame.postStart();
+                        }
+                    }
 
                     @Override
-                    public void onAnimationRepeat(Animator animation) {}
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
                 });
 
                 StartAnimJumpFall.start();
             }
 
             @Override
-            public void onAnimationCancel(Animator animation) {}
+            public void onAnimationCancel(Animator animation) {
+            }
 
             @Override
-            public void onAnimationRepeat(Animator animation) {}
+            public void onAnimationRepeat(Animator animation) {
+            }
         });
 
         // the tatzelwurm will arrange on screen on start
@@ -143,9 +156,86 @@ public class PlayerPart {
         this.GravityAnim.start();
     }
 
+    /**
+     * jumps in random direction and remove itself from view
+     *
+     */
     public void die() {
-        // TODO: Death Animation
-        this.PartImageView = null;
-        this.GravityAnim = null;
+        // references current player part to use later in inner class calls
+        final PlayerPart _this = this;
+
+        // abort previous animation
+        if (this.GravityAnim != null) {
+            this.GravityAnim.removeAllListeners();
+            this.GravityAnim.cancel();
+        }
+
+        // dying jump high is set randomly from Y [100, 300] and X [-600, -200] and [200, 600]
+        int dyingJumpY = (100+(int)(Math.random() * 200));
+        int dyingJumpX = (200+(int)(Math.random() * 400));
+
+        Random random = new Random();
+        dyingJumpX = random.nextBoolean() ? dyingJumpX : -dyingJumpX;
+        int dyingRotation = random.nextBoolean() ? 360 : -360;
+
+        // the sum of both is (+some delay to provide a smooth animation) the duration of the dying jump X animation
+        final int dyingJumpDuration = 300;
+        final int dyingFallDuration = 500;
+
+        ObjectAnimator DyingAnimJumpX = ObjectAnimator.ofFloat(this.PartImageView, "X", this.PartImageView.getX(), this.PartImageView.getX() + dyingJumpX);
+        ObjectAnimator DyingAnimJumpY = ObjectAnimator.ofFloat(this.PartImageView, "Y", this.PartImageView.getY(), this.PartImageView.getY() - dyingJumpY);
+        ObjectAnimator DyingAnimRotation = ObjectAnimator.ofFloat(this.PartImageView, "Rotation", 0, dyingRotation);
+
+        DyingAnimJumpY.setDuration(dyingJumpDuration);
+        DyingAnimJumpX.setDuration(dyingJumpDuration +  dyingFallDuration + 200);
+        DyingAnimRotation.setDuration(1800);
+
+        DyingAnimJumpY.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {}
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ObjectAnimator DyingAnimFall = ObjectAnimator.ofFloat(PartImageView, "Y", PartImageView.getY(), maxY+PartImageView.getHeight());
+                DyingAnimFall.setDuration(dyingFallDuration);
+                DyingAnimFall.setInterpolator(new AccelerateInterpolator());
+
+                DyingAnimFall.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        _this.CurrentGame.getActivity().getGameView().removeView(_this.PartImageView);
+                        _this.PartImageView = null;
+                        _this.GravityAnim = null;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {}
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {}
+                });
+                DyingAnimFall.start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
+
+        DyingAnimJumpX.start();
+        DyingAnimJumpY.start();
+        DyingAnimRotation.start();
+    }
+
+    public void growHead() {
+        AnimationDrawable growHeadAnim = this.CurrentGame.getActivity().PlayerGrowHeadAnim;
+        this.PartImageView.setImageDrawable(this.CurrentGame.getActivity().PlayerGrowHeadAnim);
+        growHeadAnim.start();
     }
 }

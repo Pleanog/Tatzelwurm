@@ -43,11 +43,14 @@ public class Player {
     public void start() {
         int delay = 300;
         int i = delay/this.Parts.size();
-        // start position on screen
+        // start position on screen on 75% of screen
         float startPosX = this.CurrentGame.getActivity().getScreenWidth()*0.75f;
         for (PlayerPart p : this.Parts) {
+            // player parts X positions are 50% in itself
             startPosX -= p.getPartImageView().getDrawable().getIntrinsicWidth()*0.5f;
-            p.start(startPosX, delay);
+            // start player start animation
+            p.start(startPosX, delay, p == this.Parts.getLast());
+            // increase delay for smooth jump of each player part
             delay += i;
             i += this.Parts.size()/10;
         }
@@ -62,11 +65,13 @@ public class Player {
     }
 
     public void hit() {
-        for (int i = 0; i < 4; i++) {
+        int i;
+        for (i = 0; i < 4; i++) {
             PlayerPart DyingPart = this.Parts.get(0);
             this.Parts.remove(0);
-            this.CurrentGame.getActivity().getGameView().removeView(DyingPart.getPartImageView());
+
             DyingPart.die();
         }
+        this.Parts.get(0).growHead();
     }
 }

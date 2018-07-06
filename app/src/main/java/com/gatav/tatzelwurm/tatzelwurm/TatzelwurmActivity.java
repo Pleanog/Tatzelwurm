@@ -1,6 +1,7 @@
 package com.gatav.tatzelwurm.tatzelwurm;
 
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class TatzelwurmActivity extends AppCompatActivity {
     // Drawables
     public Drawable PlayerHead;
     public Drawable PlayerBody;
+    public AnimationDrawable PlayerGrowHeadAnim;
     public Drawable ObstacleBig;
     public Drawable ObstacleMedium;
     public Drawable ObstacleSmall;
@@ -52,6 +54,7 @@ public class TatzelwurmActivity extends AppCompatActivity {
 
         this.PlayerHead = getResources().getDrawable(R.drawable.head);
         this.PlayerBody = getResources().getDrawable(R.drawable.body);
+        this.PlayerGrowHeadAnim = (AnimationDrawable)getResources().getDrawable(R.drawable.growhead);
         this.ObstacleBig = getResources().getDrawable(R.drawable.obstacle_big);
         this.ObstacleMedium = getResources().getDrawable(R.drawable.obstacle_medium);
         this.ObstacleSmall = getResources().getDrawable(R.drawable.obstacle_small);
