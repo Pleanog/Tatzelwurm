@@ -9,5 +9,5 @@ public class OneShotTimerHandler extends TimerHandler {
         super(func, time);
     }
 
-    protected  void scheduleTimer(int time) { this.timer.schedule(this.AsynchronousTask, time); }
+    protected void scheduleTimer(int time) { this.timer.schedule(this.AsynchronousTask, time); }
 }

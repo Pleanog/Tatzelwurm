@@ -72,6 +72,12 @@ public class Player {
 
             DyingPart.die();
         }
-        this.Parts.get(0).growHead();
+
+        if (this.Parts.size() > 0) {
+            this.Parts.get(0).growHead();
+        } else {
+            this.CurrentGame.gameover();
+        }
     }
+
 }

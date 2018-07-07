@@ -9,4 +9,21 @@
     tools:context=".TatzelwurmActivity"
     android:orientation="horizontal">
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/background"
+        />
+
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/start_message" />
+
+
 </android.support.constraint.ConstraintLayout>

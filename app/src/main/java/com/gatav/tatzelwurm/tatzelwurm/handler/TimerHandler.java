@@ -39,7 +39,7 @@ public abstract class TimerHandler {
                     try {
                         func.run();
                     } catch (Exception e) {
-                        System.err.println("run method failed: " + e.getMessage());
+                        System.err.println("run method failed: " + e.getStackTrace() + " ERR: " + e.getMessage());
                     }
                 }
             });
@@ -50,6 +50,11 @@ public abstract class TimerHandler {
     public void schedule(int time) {
         init();
         scheduleTimer(time);
+    }
+
+    public void cancel() {
+        this.timer.cancel();
+        this.AsynchronousTask.cancel();
     }
 
     protected abstract void scheduleTimer(int time);
