@@ -2,6 +2,7 @@ package com.gatav.tatzelwurm.tatzelwurm.objects;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.graphics.Matrix;
 import android.graphics.drawable.AnimationDrawable;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
