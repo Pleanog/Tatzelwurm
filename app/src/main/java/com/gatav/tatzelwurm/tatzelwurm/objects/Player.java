@@ -20,8 +20,10 @@ public class Player {
             PlayerPart NewPart;
 
             // body
-            if (i > 1 && i < lifes-1) {
+            if (i > 3 && i < lifes - 2) {
                 NewPart = new PlayerPart(CurrentGame,2);
+            } else if (i == lifes - 2) {
+                NewPart = new PlayerPart(CurrentGame, 3);
             }
             // head (0), arms (1) or tail (> 1)
             else {
@@ -44,10 +46,10 @@ public class Player {
         int delay = 300;
         int i = delay/this.Parts.size();
         // start position on screen on 75% of screen
-        float startPosX = this.CurrentGame.getActivity().getScreenWidth()*0.75f;
+        float startPosX = this.CurrentGame.getActivity().getScreenWidth()*0.5f;
         for (PlayerPart p : this.Parts) {
             // player parts X positions are 50% in itself
-            startPosX -= p.getPartImageView().getDrawable().getIntrinsicWidth()*0.5f;
+            startPosX -= p.getPartImageView().getDrawable().getIntrinsicWidth()*0.3f;
             // start player start animation
             p.start(startPosX, delay, p == this.Parts.getLast());
             // increase delay for smooth jump of each player part

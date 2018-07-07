@@ -29,10 +29,24 @@ public class TatzelwurmActivity extends AppCompatActivity {
     // Drawables
     public Drawable PlayerHead;
     public Drawable PlayerBody;
+    public Drawable PlayerPreTail;
+    public Drawable PlayerTail;
     public AnimationDrawable PlayerGrowHeadAnim;
+    //All the obstacles
     public Drawable ObstacleBig;
     public Drawable ObstacleMedium;
     public Drawable ObstacleSmall;
+
+    public Drawable Archer1;
+    public Drawable halleys_comet;
+    public Drawable horsemen12;
+    public Drawable pointing_guy2;
+    public Drawable bird3;
+    public Drawable guy_on_pole;
+    public Drawable guy_on_pole_hanging;
+    public Drawable tower4;
+    public Drawable dead_warrior2;
+
 
 
     @Override
@@ -52,12 +66,27 @@ public class TatzelwurmActivity extends AppCompatActivity {
         this.screenHeight = size.y;
         this.screenHalf = this.screenWidth/2;
 
-        this.PlayerHead = getResources().getDrawable(R.drawable.head);
-        this.PlayerBody = getResources().getDrawable(R.drawable.body);
+        this.PlayerHead = getResources().getDrawable(R.drawable.head_5);
+        this.PlayerBody = getResources().getDrawable(R.drawable.body_5);
+        this.PlayerPreTail = getResources().getDrawable(R.drawable.pretail);
+        this.PlayerTail = getResources().getDrawable(R.drawable.tail_v1);
         this.PlayerGrowHeadAnim = (AnimationDrawable)getResources().getDrawable(R.drawable.growhead);
+
+        // All the different obstacles are defined here, so that they are already loaded into the activity from the start
         this.ObstacleBig = getResources().getDrawable(R.drawable.obstacle_big);
         this.ObstacleMedium = getResources().getDrawable(R.drawable.obstacle_medium);
-        this.ObstacleSmall = getResources().getDrawable(R.drawable.archer2);
+        this.ObstacleSmall = getResources().getDrawable(R.drawable.obstacle_small);
+
+        this.Archer1 = getResources().getDrawable(R.drawable.archer1);
+        this.halleys_comet = getResources().getDrawable(R.drawable.halleys_comet);
+        this.horsemen12 = getResources().getDrawable(R.drawable.horsemen12);
+        this.pointing_guy2 = getResources().getDrawable(R.drawable.pointing_guy2);
+        this.bird3 = getResources().getDrawable(R.drawable.bird3);
+        this.guy_on_pole = getResources().getDrawable(R.drawable.guy_on_pole);
+        this.guy_on_pole_hanging = getResources().getDrawable(R.drawable.guy_on_pole_hanging);
+        this.tower4 = getResources().getDrawable(R.drawable.tower4);
+        this.dead_warrior2 = getResources().getDrawable(R.drawable.dead_warrior2);
+
 
         // get game view and call post render method
         GameView = findViewById(R.id.gameView);

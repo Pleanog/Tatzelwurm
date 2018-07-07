@@ -45,9 +45,13 @@ public class PlayerPart {
         else if (type == 2) {
             this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerBody);
         }
+        // pre-tail
+        else if (type == 3) {
+            this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerPreTail);
+        }
         // tail
         else {
-            this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerBody);
+            this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerTail);
         }
 
         // set start positions

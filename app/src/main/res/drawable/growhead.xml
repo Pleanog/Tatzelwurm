@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="true">
     <item
-        android:drawable="@drawable/body"
+        android:drawable="@drawable/body_5"
         android:duration="83"
         />
     <item
-        android:drawable="@drawable/head"
+        android:drawable="@drawable/head_5"
         android:duration="83"
         />
 </animation-list>

@@ -85,7 +85,7 @@ public class Game {
      */
     public void start() {
         // setup player
-        this.Tatzelwurm = new Player(this, 16);
+        this.Tatzelwurm = new Player(this, 24);
 
         // iterate and add in reverse order for correct z-index of parts
         LinkedList<PlayerPart> PlayerParts = Tatzelwurm.getParts();
