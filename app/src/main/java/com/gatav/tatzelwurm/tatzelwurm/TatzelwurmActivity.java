@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,11 +18,13 @@ import android.widget.TextView;
 import com.gatav.tatzelwurm.tatzelwurm.enums.GameState;
 import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class TatzelwurmActivity extends AppCompatActivity {
     // Game
     private Game CurrentGame;
+    private boolean paused = false;
 
     // Layout
     private ConstraintLayout GameView;
@@ -51,6 +54,14 @@ public class TatzelwurmActivity extends AppCompatActivity {
     public Drawable guy_on_pole_hanging;
     public Drawable tower4;
     public Drawable dead_warrior2;
+
+    //Sounds
+    public MediaPlayer hit;
+    public MediaPlayer soundtrack;
+    public MediaPlayer crack1;
+    public MediaPlayer crack2;
+    public MediaPlayer crack3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +99,61 @@ public class TatzelwurmActivity extends AppCompatActivity {
         this.dead_warrior2 = getResources().getDrawable(R.drawable.dead_warrior2);
 
 
+        // Sounds
+        // Hit Sound
+         this.hit = MediaPlayer.create(this,R.raw.hit);
+         this.hit.setLooping(false);
+         this.hit.stop();
+         try {
+             hit.prepare();
+         }catch(IOException e) {
+            System.out.println("Konnte die Datei hit nicht abspielen");
+             e.printStackTrace();
+         } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
+        // Soundtrack
+        // https://www.youtube.com/watch?v=_YQpacAuhX8
+        // Credits to: Brandon Fiechter
+        // TODO: change Music before publishing
+        this.soundtrack = MediaPlayer.create(this,R.raw.soundtrack);
+        this.soundtrack.setLooping(true);
+        this.soundtrack.stop();
+        try {
+            soundtrack.prepare();
+        }catch(IOException e) {
+            System.out.println("Konnte die Datei soundtrack nicht abspielen");
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
+        // cracking sounds for the egg
+        //crack1, crack2, crack3
+        this.crack1 = MediaPlayer.create(this,R.raw.crack1);
+        this.crack1.setLooping(false);
+        this.crack1.stop();
+        //crack2
+        this.crack2 = MediaPlayer.create(this,R.raw.crack2);
+        this.crack2.setLooping(false);
+        this.crack2.stop();
+        //crack3
+        this.crack3 = MediaPlayer.create(this,R.raw.crack3);
+        this.crack3.setLooping(false);
+        this.crack3.stop();
+        try {
+            crack1.prepare();
+            crack2.prepare();
+            crack3.prepare();
+        }catch(IOException e) {
+            System.out.println("Konnte die Datei crack1,2 oder 3 nicht abspielen");
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
+
         // get game view and call post render method
         GameView = findViewById(R.id.gameView);
         Typeface BayeuxType = Typeface.createFromAsset(getAssets(),"fonts/bayeux.ttf");
@@ -103,6 +169,23 @@ public class TatzelwurmActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onPause() {
+        if( soundtrack.isPlaying() ) {
+            soundtrack.pause();
+            this.paused = true;
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (this.paused == true) {
+            soundtrack.start();
+            this.paused = false;
+        }
+    }
 
     /**
      * Get start message for game start

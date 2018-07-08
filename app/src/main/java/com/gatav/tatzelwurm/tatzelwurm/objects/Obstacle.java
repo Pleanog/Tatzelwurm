@@ -146,6 +146,7 @@ public class Obstacle extends Touchable {
         if (!this.CurrentGame.isInvulnerable()) {
             this.CurrentGame.getTatzelwurm().hit();
             this.CurrentGame.setInvulnerable(true);
+            this.CurrentGame.getActivity().hit.start();
             new OneShotTimerHandler(new Runnable() {
                 @Override
                 public void run() {

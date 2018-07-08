@@ -74,6 +74,7 @@ public class Player {
             this.Parts.remove(0);
 
             DyingPart.die();
+
         }
 
         if (this.Parts.size() > 0) {
