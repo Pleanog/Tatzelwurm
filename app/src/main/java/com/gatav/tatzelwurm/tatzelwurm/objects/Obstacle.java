@@ -126,7 +126,6 @@ public class Obstacle extends Touchable {
                 break;
         }
 
-        System.out.println("Obstacle-Y-Position  " + obstaclePossiblePositions + "Value" + obstacleAlignmentPosition);
         super.getTouchableImageView().setY(obstacleAlignmentPosition);
 
         // setup & start animation to move from left to right

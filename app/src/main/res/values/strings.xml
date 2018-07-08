@@ -1,67 +1,67 @@
 <resources>
-    <string name="app_name">Tatzelwurm</string>
-    <string name="start_message">Gebt acht!\n Der Tatzelwurm.</string>
-    <string-array name="messages">
-        <item>Where Harold, duke of the English, and his knights ride to Bosham Church</item>
-        <item>Here Harold sailed by sea</item>
-        <item>vand with sails filled with wind came to the land of Count Wido</item>
-        <item>Harold</item>
-        <item>Here Wido seized Harold</item>
-        <item>and led him to Beaurain and held him there</item>
-        <item>Where Harold and Wido confer</item>
-        <item>Turold</item>
-        <item>The messengers of William</item>
-        <item>Here the messenger comes to Duke William</item>
-        <item>Here Wido led Harold to William Duke of the Normans</item>
-        <item>Here Duke William comes with Harold to his palace</item>
-        <item>Where a cleric and Aelfgyva...</item>
-        <item>Here Duke William and his army came to the Mount of Michael</item>
-        <item>and here they crossed the Couesnon River</item>
-        <item>Here Duke Harold dragged them from the sand</item>
-        <item>and they came to Dol and Conan turned in flight</item>
-        <item>Rennes</item>
-        <item>Here the knights of Duke William fight against the men of Dinan</item>
-        <item>and Conan passed out the keys</item>
-        <item>Here William gave arms to Harold</item>
-        <item>Here William came to Bayeux</item>
-        <item>Where Harold made an oath to Duke William</item>
-        <item>Here Duke Harold returned to English land</item>
-        <item>and he came to King Edward</item>
-        <item>Here the body of King Edward is carried to the Church of Saint Peter the Apostle</item>
-        <item>Here King Edward in bed speaks to his faithful followers</item>
-        <item>and here he died</item>
-        <item>Here they gave the king's crown to Harold</item>
-        <item>Here sits Harold King of the English</item>
-        <item>Archbishop Stigand</item>
-        <item>These people marvel at the star</item>
-        <item>Harold</item>
-        <item>Here an English ship came to the land of Duke William</item>
-        <item>Here Duke William ordered ships to be built</item>
-        <item>Here they drag the ships to the sea</item>
-        <item>These men carry arms to the ships and here they drag a cart (laden) with wine and arms</item>
-        <item>Here Duke William in a great ship crossed the sea and came to Pevensey</item>
-        <item>Here the horses leave the ships</item>
-        <item>and here the knights have hurried to Hastings to seize food</item>
-        <item>Here is Wadard</item>
-        <item>Here the meat is being cooked and here the servants have served (it)</item>
-        <item>Here they have a meal</item>
-        <item>Here the bishop blesses the food and drink</item>
-        <item>Bishop Odo, William, Robert</item>
-        <item>He ordered that a motte should be dug at Hastings</item>
-        <item>the camp</item>
-        <item>Here William was told about Harold</item>
-        <item>Here a house is burned</item>
-        <item>Here the knights have left Hastings and have come to the battle against King Harold</item>
-        <item>Here Duke William asks Vital if he has seen Harold's army</item>
-        <item>This man tells King Harold about Duke William's army</item>
-        <item>Here Duke William speaks to his knights to prepare themselves manfully and wisely for the battle against the army of the English</item>
-        <item>Here fell Leofwine and Gyrth, brothers of King Harold</item>
-        <item>Here English and French fell at the same time in battle</item>
-        <item>Here Bishop Odo, holding a club, gives strength to the boys</item>
-        <item>Here is Duke William</item>
-        <item>Eustace</item>
-        <item>Here the French are fighting and have killed those who were with Harold</item>
-        <item>Here King Harold is slain</item>
-        <item>and the English have turned in flight</item>
-    </string-array>
+<string name="app_name">Tatzelwurm</string>
+<string name="start_message">Behold!\n The Tatzelwurm.</string>
+<string-array name="messages">
+    <item>Where Harold, duke of the English, and his knights ride to Bosham Church</item>
+    <item>Here Harold sailed by sea</item>
+    <item>and with sails filled with wind came to the land of Count Wido</item>
+    <item>Harold</item>
+    <item>Here Wido seized Harold</item>
+    <item>and led him to Beaurain and held him there</item>
+    <item>Where Harold and Wido confer</item>
+    <item>Turold</item>
+    <item>The messengers of William</item>
+    <item>Here the messenger comes to Duke William</item>
+    <item>Here Wido led Harold to William Duke of the Normans</item>
+    <item>Here Duke William comes with Harold to his palace</item>
+    <item>Where a cleric and Aelfgyva...</item>
+    <item>Here Duke William and his army came to the Mount of Michael</item>
+    <item>and here they crossed the Couesnon River</item>
+    <item>Here Duke Harold dragged them from the sand</item>
+    <item>and they came to Dol and Conan turned in flight</item>
+    <item>Rennes</item>
+    <item>Here the knights of Duke William fight against the men of Dinan</item>
+    <item>and Conan passed out the keys</item>
+    <item>Here William gave arms to Harold</item>
+    <item>Here William came to Bayeux</item>
+    <item>Where Harold made an oath to Duke William</item>
+    <item>Here Duke Harold returned to English land</item>
+    <item>and he came to King Edward</item>
+    <item>Here the body of King Edward is carried to the Church of Saint Peter the Apostle</item>
+    <item>Here King Edward in bed speaks to his faithful followers</item>
+    <item>and here he died</item>
+    <item>Here they gave the king's crown to Harold</item>
+    <item>Here sits Harold King of the English</item>
+    <item>Archbishop Stigand</item>
+    <item>These people marvel at the star</item>
+    <item>Harold</item>
+    <item>Here an English ship came to the land of Duke William</item>
+    <item>Here Duke William ordered ships to be built</item>
+    <item>Here they drag the ships to the sea</item>
+    <item>These men carry arms to the ships and here they drag a cart (laden) with wine and arms</item>
+    <item>Here Duke William in a great ship crossed the sea and came to Pevensey</item>
+    <item>Here the horses leave the ships</item>
+    <item>and here the knights have hurried to Hastings to seize food</item>
+    <item>Here is Wadard</item>
+    <item>Here the meat is being cooked and here the servants have served (it)</item>
+    <item>Here they have a meal</item>
+    <item>Here the bishop blesses the food and drink</item>
+    <item>Bishop Odo, William, Robert</item>
+    <item>He ordered that a motte should be dug at Hastings</item>
+    <item>the camp</item>
+    <item>Here William was told about Harold</item>
+    <item>Here a house is burned</item>
+    <item>Here the knights have left Hastings and have come to the battle against King Harold</item>
+    <item>Here Duke William asks Vital if he has seen Harold's army</item>
+    <item>This man tells King Harold about Duke William's army</item>
+    <item>Here Duke William speaks to his knights to prepare themselves manfully and wisely for the battle against the army of the English</item>
+    <item>Here fell Leofwine and Gyrth, brothers of King Harold</item>
+    <item>Here English and French fell at the same time in battle</item>
+    <item>Here Bishop Odo, holding a club, gives strength to the boys</item>
+    <item>Here is Duke William</item>
+    <item>Eustace</item>
+    <item>Here the French are fighting and have killed those who were with Harold</item>
+    <item>Here King Harold is slain</item>
+    <item>and the English have turned in flight</item>
+</string-array>
 </resources>
