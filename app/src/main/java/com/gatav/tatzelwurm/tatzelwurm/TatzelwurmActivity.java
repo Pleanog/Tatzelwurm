@@ -93,7 +93,7 @@ public class TatzelwurmActivity extends AppCompatActivity {
     }
 
     // lazy loads
-    public Animation getFadeOutInOut() { return AnimationUtils.loadAnimation(this, R.anim.fadeOutInOut); }
+    public Animation getFadeOutInOut() { return AnimationUtils.loadAnimation(this, R.anim.fadeoutinout); }
 
     public Drawable getEggTop() { return getResources().getDrawable(R.drawable.eggtop); }
 
