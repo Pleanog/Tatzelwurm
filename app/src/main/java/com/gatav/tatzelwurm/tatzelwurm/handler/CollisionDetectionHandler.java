@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.gatav.tatzelwurm.tatzelwurm.TatzelwurmActivity;
+
 import java.lang.ref.WeakReference;
 
 /**

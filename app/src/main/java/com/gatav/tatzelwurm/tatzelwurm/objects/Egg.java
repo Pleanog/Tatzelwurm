@@ -59,14 +59,17 @@ public class Egg {
         // TODO: Replace with Egg drawables
         switch (this.cracks) {
             case 0:
+                this.CurrentGame.getActivity().crack1.start();
                 RotTopAnim.start();
                 RotBottomAnim.start();
                 break;
             case 1:
+                this.CurrentGame.getActivity().crack2.start();
                 RotTopAnim.start();
                 RotBottomAnim.start();
                 break;
             case 2:
+                this.CurrentGame.getActivity().crack3.start();
                 RotTopAnim.start();
                 RotBottomAnim.start();
                 // fake player movement with moving egg and let the top jump away

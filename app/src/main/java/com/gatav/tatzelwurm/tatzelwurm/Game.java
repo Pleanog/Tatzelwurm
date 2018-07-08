@@ -99,6 +99,10 @@ public class Game {
      * start the actual game
      */
     public void start() {
+
+        // starts soundtrack
+        this.Activity.soundtrack.start();
+
         // references current game to use later in inner class calls
         final Game _this = this;
 
@@ -136,7 +140,7 @@ public class Game {
                     }
                 }
             }
-        }, 86);
+        }, 100);
 
         // go!
         this.Tatzelwurm.start();
