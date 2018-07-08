@@ -142,7 +142,6 @@ public class PlayerPart {
      * @param delay delay needed ro reach the estimated min/max Y-position
      */
     public void updateGravity(int delay) {
-        GravityState CurrentGravity = this.CurrentGame.getGravity();
         // is the gravity decreasing (tatzelwurm is moving up) or normal/increasing (tatzelwurm is moving down fast)?
         int toPosition = this.CurrentGame.getGravity() == GravityState.DECREASING ? minY : maxY;
         int duration = (this.CurrentGame.getGravity() == GravityState.INCREASING ? 900 : 2000)+((delay*delay)*5);
