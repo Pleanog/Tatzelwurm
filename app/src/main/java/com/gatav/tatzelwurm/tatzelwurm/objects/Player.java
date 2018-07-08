@@ -20,9 +20,10 @@ public class Player {
             PlayerPart NewPart;
 
             // body
-            if (i > 3 && i < lifes - 2) {
+            if (i > 1 && i < lifes - 2) {
                 NewPart = new PlayerPart(CurrentGame,2);
-            } else if (i == lifes - 2) {
+            }
+            else if (i == lifes - 2) {
                 NewPart = new PlayerPart(CurrentGame, 3);
             }
             // head (0), arms (1) or tail (> 1)

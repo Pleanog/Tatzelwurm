@@ -31,7 +31,8 @@ public class PlayerPart {
     public PlayerPart(Game CurrentGame, int type) {
         this.CurrentGame = CurrentGame;
 
-        this.PartImageView = new ImageView(CurrentGame.getActivity());
+        this.PartImageView = new ImageView(this.CurrentGame.getActivity());
+
         // set drawable
         // head
         // TODO: create and change drawables // Sorry mache ich noch lol

@@ -34,11 +34,21 @@ public class TatzelwurmActivity extends AppCompatActivity {
     // TODO: final public for temporary convenient
     // Drawables
     public Drawable PlayerHead;
+    public Drawable PlayerPreTail;
+    public Drawable PlayerTail;
     public Drawable PlayerBody;
     public AnimationDrawable PlayerGrowHeadAnim;
-    public Drawable ObstacleBig;
-    public Drawable ObstacleMedium;
-    public Drawable ObstacleSmall;
+    //All the obstacles
+    public Drawable Archer1;
+    public Drawable halleys_comet;
+    public Drawable horsemen12;
+    public Drawable pointing_guy2;
+    public Drawable bird3;
+    public Drawable bird2;
+    public Drawable guy_on_pole;
+    public Drawable guy_on_pole_hanging;
+    public Drawable tower4;
+    public Drawable dead_warrior2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +68,9 @@ public class TatzelwurmActivity extends AppCompatActivity {
         this.screenHalf = this.screenWidth/2;
 
         this.PlayerHead = getResources().getDrawable(R.drawable.head);
-        this.PlayerBody = getResources().getDrawable(R.drawable.body);
+        this.PlayerBody = getResources().getDrawable(R.drawable.body_5);
+        this.PlayerTail = getResources().getDrawable(R.drawable.tail);
+        this.PlayerPreTail = getResources().getDrawable(R.drawable.pretail);
         this.PlayerGrowHeadAnim = (AnimationDrawable)getResources().getDrawable(R.drawable.growhead);
 
         // All the different obstacles are defined here, so that they are already loaded into the activity from the start
@@ -67,6 +79,7 @@ public class TatzelwurmActivity extends AppCompatActivity {
         this.horsemen12 = getResources().getDrawable(R.drawable.horsemen12);
         this.pointing_guy2 = getResources().getDrawable(R.drawable.pointing_guy2);
         this.bird3 = getResources().getDrawable(R.drawable.bird3);
+        this.bird2 = getResources().getDrawable(R.drawable.bird2);
         this.guy_on_pole = getResources().getDrawable(R.drawable.guy_on_pole);
         this.guy_on_pole_hanging = getResources().getDrawable(R.drawable.guy_on_pole_hanging);
         this.tower4 = getResources().getDrawable(R.drawable.tower4);

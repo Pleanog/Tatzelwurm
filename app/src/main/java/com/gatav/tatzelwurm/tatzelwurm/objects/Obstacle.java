@@ -66,7 +66,7 @@ public class Obstacle extends Touchable {
                 break;
             default:
                 // default is the bird, because it can have every obstaclePossiblePositions
-                currentDrawable = this.CurrentGame.getActivity().bird3;
+                currentDrawable = this.CurrentGame.getActivity().bird2;
                 obstaclePossiblePositions = ObstaclePosition.topMiddelBottom;
                 break;
         }

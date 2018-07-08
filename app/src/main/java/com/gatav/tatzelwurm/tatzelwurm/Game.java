@@ -136,7 +136,7 @@ public class Game {
                     }
                 }
             }
-        }, 42);
+        }, 86);
 
         // go!
         this.Tatzelwurm.start();
