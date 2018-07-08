@@ -9,8 +9,14 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
+import com.gatav.tatzelwurm.tatzelwurm.enums.GameState;
 import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
+
+import java.util.Random;
 
 public class TatzelwurmActivity extends AppCompatActivity {
     // Game
@@ -29,25 +35,10 @@ public class TatzelwurmActivity extends AppCompatActivity {
     // Drawables
     public Drawable PlayerHead;
     public Drawable PlayerBody;
-    public Drawable PlayerPreTail;
-    public Drawable PlayerTail;
     public AnimationDrawable PlayerGrowHeadAnim;
-    //All the obstacles
     public Drawable ObstacleBig;
     public Drawable ObstacleMedium;
     public Drawable ObstacleSmall;
-
-    public Drawable Archer1;
-    public Drawable halleys_comet;
-    public Drawable horsemen12;
-    public Drawable pointing_guy2;
-    public Drawable bird3;
-    public Drawable guy_on_pole;
-    public Drawable guy_on_pole_hanging;
-    public Drawable tower4;
-    public Drawable dead_warrior2;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,17 +57,11 @@ public class TatzelwurmActivity extends AppCompatActivity {
         this.screenHeight = size.y;
         this.screenHalf = this.screenWidth/2;
 
-        this.PlayerHead = getResources().getDrawable(R.drawable.head_5);
-        this.PlayerBody = getResources().getDrawable(R.drawable.body_5);
-        this.PlayerPreTail = getResources().getDrawable(R.drawable.pretail);
-        this.PlayerTail = getResources().getDrawable(R.drawable.tail_v1);
+        this.PlayerHead = getResources().getDrawable(R.drawable.head);
+        this.PlayerBody = getResources().getDrawable(R.drawable.body);
         this.PlayerGrowHeadAnim = (AnimationDrawable)getResources().getDrawable(R.drawable.growhead);
 
         // All the different obstacles are defined here, so that they are already loaded into the activity from the start
-        this.ObstacleBig = getResources().getDrawable(R.drawable.obstacle_big);
-        this.ObstacleMedium = getResources().getDrawable(R.drawable.obstacle_medium);
-        this.ObstacleSmall = getResources().getDrawable(R.drawable.obstacle_small);
-
         this.Archer1 = getResources().getDrawable(R.drawable.archer1);
         this.halleys_comet = getResources().getDrawable(R.drawable.halleys_comet);
         this.horsemen12 = getResources().getDrawable(R.drawable.horsemen12);
@@ -99,8 +84,46 @@ public class TatzelwurmActivity extends AppCompatActivity {
         });
     }
 
+
     /**
-     /**
+     * Get start message for game start
+     * @return
+     */
+    public String getStartMessage() {
+        return getResources().getString(R.string.start_message);
+    }
+
+    /**
+     * Get random game message
+     * @return Message
+     */
+    public String getMessage() {
+        String[] messages = getResources().getStringArray(R.array.messages);
+        return messages[new Random().nextInt(messages.length)];
+    }
+
+    // lazy loads
+    public Animation getFadeOutInOut() { return AnimationUtils.loadAnimation(this, R.anim.fadeoutinout); }
+
+    public Drawable getEggTop() { return getResources().getDrawable(R.drawable.eggtop); }
+
+    public Drawable getEggBottom() { return getResources().getDrawable(R.drawable.eggbottom); }
+
+    public int getScreenWidth()  { return this.screenWidth; }
+
+    public int getScreenHeight() {
+        return this.screenHeight;
+    }
+
+    public ConstraintLayout getGameView() {
+        return this.GameView;
+    }
+
+    public TextView getMessageView() {
+        return (TextView)findViewById(R.id.messageTextView);
+    }
+
+    /**
      * Use first half of screen to decrease gravity, other half to increase gravity
      * no input causes normal gravity
      * @param event MotionEvent
@@ -109,15 +132,44 @@ public class TatzelwurmActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        int eventAction = event.getAction();
+        switch (this.CurrentGame.getState()) {
+            case INTRO:
+                introControl(event, event.getAction());
+                break;
+            case GAME:
+                gravityControl(event, event.getAction());
+                break;
+            case GAMEOVER:
+                break;
+        }
+
+        return true;
+    }
+
+    /**
+     * Controls for the Intro
+     * @param event MotionEvent
+     * @param eventAction eventAction
+     */
+    public void introControl(MotionEvent event, int eventAction) {
+        switch (eventAction & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
+                this.CurrentGame.getIntroEgg().crack();
+                break;
+        }
+    }
+
+    /**
+     * Control during the game for gravity
+     * @param event MotionEvent
+     * @param eventAction eventAction
+     */
+    public void gravityControl(MotionEvent event, int eventAction) {
         int eventPosX = (int)event.getX();
 
         switch (eventAction & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_POINTER_DOWN:
-                // overwrite latest pointer position at multitouch
-                eventPosX = (int)event.getX(event.getPointerCount()-1);
             case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_UP:
                 if (eventPosX < this.screenHalf) {
                     this.CurrentGame.setGravity(GravityState.DECREASING);
                 } else {
@@ -130,17 +182,12 @@ public class TatzelwurmActivity extends AppCompatActivity {
                 this.CurrentGame.update();
                 break;
         }
-
-        return true;
     }
 
-    public int getScreenWidth()  { return this.screenWidth; }
-
-    public int getScreenHeight() {
-        return this.screenHeight;
-    }
-
-    public ConstraintLayout getGameView() {
-        return this.GameView;
+    /**
+     * Restarts the whole game. All Views and TimerHandlers will be reset
+     */
+    public void restart() {
+        this.CurrentGame = new Game(this);
     }
 }
