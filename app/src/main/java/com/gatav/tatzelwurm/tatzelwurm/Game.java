@@ -186,7 +186,7 @@ public class Game {
                 boolean gapOk = false;
                 if (LastObstacleImageView != null) {
                     int headWidth = _this.Tatzelwurm.getLifes() > 0 ?  Tatzelwurm.getHead().getPartImageView().getWidth() : 20;
-                    int minGap = LastObstacleImageView.getWidth() + headWidth - 50;
+                    int minGap = LastObstacleImageView.getWidth() + headWidth - 30;
                     float gap = _this.getActivity().getScreenWidth() - LastObstacleImageView.getX();
                     gapOk = minGap < gap;
                 }
@@ -208,7 +208,7 @@ public class Game {
             public void run() {
                 _this.incDifficulty();
             }
-        }, 4000, 7000);
+        }, 4000, 10000);
     }
 
     /**
@@ -260,6 +260,7 @@ public class Game {
     public void incDifficulty() {
         this.difficulty++;
         int newDifficulty = difficulty*100;
+
         if (newDifficulty < 1800) {
            this.ObstacleTimeHandler.schedule(2000 - newDifficulty);
         }

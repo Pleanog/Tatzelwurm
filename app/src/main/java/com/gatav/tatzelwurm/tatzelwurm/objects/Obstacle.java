@@ -21,7 +21,7 @@ public class Obstacle extends Touchable {
 
         // setup ImageView
         // Type will be selected as a number between 0 ..(X-1)
-        int obstacleType =(int)(Math.random() * (8+1));
+        int obstacleType =(int)(Math.random() * (21+1));
 
         /* Possible ObstaclePositionAlignments for the Objects
          * top, middele, bottom, topMiddel, middelBottom, topMiddelBottom,
@@ -30,39 +30,67 @@ public class Obstacle extends Touchable {
         // Sets standartposition to bottom
         ObstaclePosition obstaclePossiblePositions = ObstaclePosition.bottom;
 
+        // Increase Probability for other than bottom with multiple cases. Change if necessary
         Drawable currentDrawable;
         switch (obstacleType) {
             case 0:
                 currentDrawable = this.CurrentGame.getActivity().Archer1;
                 break;
             case 1:
+                currentDrawable = this.CurrentGame.getActivity().horsemen12;
+                break;
+            case 2:
+                currentDrawable = this.CurrentGame.getActivity().guy_on_pole;
+                break;
+            case 3:
+                currentDrawable = this.CurrentGame.getActivity().tower4;
+                break;
+            case 4:
+                currentDrawable = this.CurrentGame.getActivity().bird2;
+                break;
+            case 5:
+                currentDrawable = this.CurrentGame.getActivity().fort05;
+                break;
+            case 6:
+                currentDrawable = this.CurrentGame.getActivity().tower03;
+                break;
+            case 7:
+                currentDrawable = this.CurrentGame.getActivity().tree03;
+                break;
+            case 8:
+            case 15:
                 currentDrawable = this.CurrentGame.getActivity().halleys_comet;
                 obstaclePossiblePositions = ObstaclePosition.topMiddelBottom;
                 break;
-            case 2:
-                currentDrawable = this.CurrentGame.getActivity().horsemen12;
+            case 9:
+            case 16:
+                currentDrawable = this.CurrentGame.getActivity().lion1;
+                obstaclePossiblePositions = ObstaclePosition.middelBottom;
                 break;
-            case 3:
-                currentDrawable = this.CurrentGame.getActivity().pointing_guy2;
+            case 10:
+            case 17:
+                currentDrawable = this.CurrentGame.getActivity().bird1;
                 obstaclePossiblePositions = ObstaclePosition.topMiddel;
                 break;
-            case 4:
+            case 11:
+            case 18:
+                currentDrawable = this.CurrentGame.getActivity().dead_warrior2;
+                obstaclePossiblePositions = ObstaclePosition.topMiddel;
+                break;
+            case 12:
+            case 19:
                 currentDrawable = this.CurrentGame.getActivity().bird3;
                 obstaclePossiblePositions = ObstaclePosition.topMiddel;
                 break;
-            case 5:
-                currentDrawable = this.CurrentGame.getActivity().guy_on_pole;
+            case 13:
+            case 20:
+                currentDrawable = this.CurrentGame.getActivity().pointing_guy2;
+                obstaclePossiblePositions = ObstaclePosition.topMiddel;
                 break;
-            case 6:
+            case 14:
+            case 21:
                 currentDrawable = this.CurrentGame.getActivity().guy_on_pole_hanging;
                 obstaclePossiblePositions = ObstaclePosition.top;
-                break;
-            case 7:
-                currentDrawable = this.CurrentGame.getActivity().tower4;
-                break;
-            case 8:
-                currentDrawable = this.CurrentGame.getActivity().dead_warrior2;
-                obstaclePossiblePositions = ObstaclePosition.topMiddel;
                 break;
             default:
                 // default is the bird, because it can have every obstaclePossiblePositions

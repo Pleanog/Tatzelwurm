@@ -54,6 +54,12 @@ public class TatzelwurmActivity extends AppCompatActivity {
     public Drawable guy_on_pole_hanging;
     public Drawable tower4;
     public Drawable dead_warrior2;
+    public Drawable fort05;
+    public Drawable king3;
+    public Drawable lion1;
+    public Drawable tower03;
+    public Drawable tree03;
+    public Drawable bird1;
 
     //Sounds
     public MediaPlayer hit;
@@ -97,6 +103,12 @@ public class TatzelwurmActivity extends AppCompatActivity {
         this.guy_on_pole_hanging = getResources().getDrawable(R.drawable.guy_on_pole_hanging);
         this.tower4 = getResources().getDrawable(R.drawable.tower4);
         this.dead_warrior2 = getResources().getDrawable(R.drawable.dead_warrior2);
+        this.fort05 = getResources().getDrawable(R.drawable.fort05);
+        this.king3 = getResources().getDrawable(R.drawable.king3);
+        this.lion1 = getResources().getDrawable(R.drawable.lion1);
+        this.tower03 = getResources().getDrawable(R.drawable.tower03);
+        this.tree03 = getResources().getDrawable(R.drawable.tree03);
+        this.bird1 = getResources().getDrawable(R.drawable.bird1);
 
 
         // Sounds

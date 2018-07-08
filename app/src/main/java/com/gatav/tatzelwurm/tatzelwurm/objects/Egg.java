@@ -26,9 +26,9 @@ public class Egg {
         this.TopImageView.setImageDrawable(this.CurrentGame.getActivity().getEggTop());
         this.BottomImageView.setImageDrawable(this.CurrentGame.getActivity().getEggBottom());
 
-        int startTopPosX = this.CurrentGame.getActivity().getScreenWidth()/2 - this.TopImageView.getWidth()/2;
-        int startBottomPosX = this.CurrentGame.getActivity().getScreenWidth()/2 - this.BottomImageView.getWidth()/2;
-        int startTopPosY = this.CurrentGame.getActivity().getScreenHeight() - this.TopImageView.getDrawable().getIntrinsicHeight() - this.BottomImageView.getDrawable().getIntrinsicHeight();
+        int startTopPosX = this.CurrentGame.getActivity().getScreenWidth()/2 - this.TopImageView.getDrawable().getIntrinsicWidth()/2;
+        int startBottomPosX = this.CurrentGame.getActivity().getScreenWidth()/2 - this.BottomImageView.getDrawable().getIntrinsicWidth()/2;
+        int startTopPosY = this.CurrentGame.getActivity().getScreenHeight() - this.TopImageView.getDrawable().getIntrinsicHeight() - this.BottomImageView.getDrawable().getIntrinsicHeight() + 20;
         int startBottomPosY = this.CurrentGame.getActivity().getScreenHeight() - this.TopImageView.getDrawable().getIntrinsicHeight();
 
         this.TopImageView.setX(startTopPosX);
