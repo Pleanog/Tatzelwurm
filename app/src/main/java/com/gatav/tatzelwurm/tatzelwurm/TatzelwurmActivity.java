@@ -13,7 +13,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.gatav.tatzelwurm.tatzelwurm.enums.GameState;
 import com.gatav.tatzelwurm.tatzelwurm.enums.GravityState;
 
 import java.util.Random;
@@ -94,6 +93,8 @@ public class TatzelwurmActivity extends AppCompatActivity {
     }
 
     // lazy loads
+    public Animation getFadeOutInOut() { return AnimationUtils.loadAnimation(this, R.anim.fadeOutInOut); }
+
     public Drawable getEggTop() { return getResources().getDrawable(R.drawable.eggtop); }
 
     public Drawable getEggBottom() { return getResources().getDrawable(R.drawable.eggbottom); }

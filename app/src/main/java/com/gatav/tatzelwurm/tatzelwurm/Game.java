@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.renderscript.Sampler;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -263,33 +264,9 @@ public class Game {
         TextView MessageView = this.Activity.getMessageView();
         this.Activity.getMessageView().setText(Message);
 
-        ObjectAnimator FadeInViewAnim = ObjectAnimator.ofFloat(MessageView, "Alpha", 0.0f, 1.f);
-        FadeInViewAnim.setDuration(1000);
         if (discard) {
-            FadeInViewAnim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {}
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    discardMessage();
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {}
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {}
-            });
+            Animation FadeAnim = this.Activity.getFadeOutInOut();
+            MessageView.startAnimation(FadeAnim);
         }
-        FadeInViewAnim.start();
-    }
-
-    private void discardMessage() {
-        TextView MessageView = this.Activity.getMessageView();
-        ObjectAnimator FadeOutViewAnim = ObjectAnimator.ofFloat(MessageView, "Alpha", MessageView.getAlpha(), 0.f);
-        FadeOutViewAnim.setDuration(1000);
-        FadeOutViewAnim.setStartDelay(1000);
-        FadeOutViewAnim.start();
     }
 }
