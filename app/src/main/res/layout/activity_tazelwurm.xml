@@ -13,7 +13,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:src="@drawable/background"
         />
 
@@ -23,7 +23,27 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:gravity="center"
-        android:text="@string/start_message" />
+        android:paddingLeft="30px"
+        android:paddingRight="30px"
+        android:lineSpacingMultiplier="1.5"
+        android:lineSpacingExtra="6dp"
+        android:text="@string/start_message"
+        android:textAllCaps="true"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/scoreTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:translationX="0dp"
+        android:gravity="end"
+        android:paddingTop="30px"
+        android:paddingLeft="30px"
+        android:paddingRight="30px"
+        android:text="0"
+        android:textAllCaps="true"
+        android:textSize="24sp" />
 
 
 </android.support.constraint.ConstraintLayout>

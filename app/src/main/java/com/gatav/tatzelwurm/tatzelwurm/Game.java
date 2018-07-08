@@ -27,6 +27,7 @@ public class Game {
     private Player Tatzelwurm;
 
     // game parameters
+    private int score = 0;
     private GameState State = GameState.INTRO;
     private GravityState Gravity = GravityState.NORMAL;
     private boolean controlLocked = true;
@@ -38,6 +39,7 @@ public class Game {
     private PeriodicTimerHandler ObstacleTimeHandler;
     private PeriodicTimerHandler DifficultyTimeHandler;
     private PeriodicTimerHandler CollisionTimeHandler;
+    private PeriodicTimerHandler ScoreTimeHandler;
 
     /**
      * starts new game
@@ -49,8 +51,10 @@ public class Game {
         final Game _this = this;
 
         // remove all inner views, except the background, if the game restarts
-        this.Activity.getGameView().removeViews(2, this.Activity.getGameView().getChildCount()-2);
+        this.Activity.getGameView().removeViews(3, this.Activity.getGameView().getChildCount()-3);
         // fade in the main view, if the game restarts
+        Animation FadeInAnim = _this.Activity.getFadeIn();
+        this.Activity.getMessageView().startAnimation(FadeInAnim);
         ObjectAnimator FadeOutViewAnim = ObjectAnimator.ofFloat(this.Activity.getGameView(), "Alpha", this.Activity.getGameView().getAlpha(), 1.f);
         FadeOutViewAnim.setDuration(1500);
         FadeOutViewAnim.start();
@@ -136,7 +140,15 @@ public class Game {
                     }
                 }
             }
-        }, 86);
+        }, 180);
+
+        ScoreTimeHandler = new PeriodicTimerHandler(new Runnable() {
+            @Override
+            public void run() {
+                _this.score += _this.difficulty + _this.Tatzelwurm.getLifes()/6;
+                _this.Activity.getScoreView().setText(Integer.toString(_this.score));
+            }
+        }, 100);
 
         // go!
         this.Tatzelwurm.start();
@@ -184,7 +196,7 @@ public class Game {
                     _this.Activity.getGameView().addView(NewObstacle.getTouchableImageView());
                 }
             }
-        }, 2000, 3000);
+        }, 2000, 3500);
 
         // the difficulty will be increased every x ms
         _this.DifficultyTimeHandler = new PeriodicTimerHandler(new Runnable() {
@@ -206,6 +218,7 @@ public class Game {
         this.ObstacleTimeHandler.cancel();
         this.DifficultyTimeHandler.cancel();
         this.CollisionTimeHandler.cancel();
+        this.ScoreTimeHandler.cancel();
 
         // fade out the game view. The app has a black background, so it looks like a black fade out
         ObjectAnimator FadeOutViewAnim = ObjectAnimator.ofFloat(this.Activity.getGameView(), "Alpha", 1.0f, 0.f);
@@ -245,7 +258,7 @@ public class Game {
         int newDifficulty = difficulty*100;
 
         if (newDifficulty < 1200) {
-           this.ObstacleTimeHandler.schedule(2000 - newDifficulty, 2000);
+           this.ObstacleTimeHandler.schedule(2000 - newDifficulty);
         }
     }
 
@@ -257,16 +270,46 @@ public class Game {
         this.message(this.Activity.getMessage(), discard);
     }
 
-    public void message(String Message, boolean discard) {
+    public void message(final String Message, boolean discard) {
         // references current game to use later in inner class calls
-        Game _this = this;
+        final Game _this = this;
 
-        TextView MessageView = this.Activity.getMessageView();
-        this.Activity.getMessageView().setText(Message);
+        final TextView MessageView = this.Activity.getMessageView();
 
         if (discard) {
-            Animation FadeAnim = this.Activity.getFadeOutInOut();
-            MessageView.startAnimation(FadeAnim);
+            final Animation FadeOutAnim = this.Activity.getFadeOut();
+            FadeOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    _this.Activity.getMessageView().setText(Message);
+                    Animation FadeInAnim = _this.Activity.getFadeIn();
+                    FadeInAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {}
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            Animation FadeOut2Anim = _this.Activity.getFadeOut();
+                            FadeOut2Anim.setStartOffset(2000);
+                            FadeOut2Anim.setFillAfter(true);
+                            MessageView.startAnimation(FadeOut2Anim);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {}
+                    });
+                    MessageView.startAnimation(FadeInAnim);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+            MessageView.startAnimation(FadeOutAnim);
+        } else {
+            _this.Activity.getMessageView().setText(Message);
         }
     }
 }

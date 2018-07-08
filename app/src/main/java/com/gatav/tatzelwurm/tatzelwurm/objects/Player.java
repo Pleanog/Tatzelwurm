@@ -47,7 +47,7 @@ public class Player {
         int delay = 300;
         int i = delay/this.Parts.size();
         // start position on screen on 75% of screen
-        float startPosX = this.CurrentGame.getActivity().getScreenWidth()*0.5f;
+        float startPosX = this.CurrentGame.getActivity().getScreenWidth()*0.7f;
         for (PlayerPart p : this.Parts) {
             // player parts X positions are 50% in itself
             startPosX -= p.getPartImageView().getDrawable().getIntrinsicWidth()*0.3f;

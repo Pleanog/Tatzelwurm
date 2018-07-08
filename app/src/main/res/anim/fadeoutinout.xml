@@ -1,22 +1,15 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:anim/linear_interpolator">
 
-    <alpha
-        android:fromAlpha="1.0"
+    <alpha android:fromAlpha="1.0"
         android:toAlpha="0.0"
-        android:duration="500"/>
+        android:duration="3000"/>
 
-    <alpha
-        android:fromAlpha="0.0"
-        android:toAlpha="1.0"
-        android:startOffset="500"
-        android:duration="500"
-        />
-
-    <alpha
-        android:fromAlpha="0.0"
-        android:toAlpha="1.0"
-        android:startOffset="2500"
-        android:duration="500"
-        />
+    <!--<alpha android:fromAlpha="0.0"-->
+        <!--android:toAlpha="1.0"-->
+        <!--android:interpolator="@android:anim/accelerate_interpolator"-->
+        <!--android:duration="3000"-->
+        <!--android:repeatMode="reverse"-->
+        <!--android:repeatCount="0"-->
+        <!--android:startOffset="1000"/>-->
 </set>

@@ -1,6 +1,7 @@
 package com.gatav.tatzelwurm.tatzelwurm;
 
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
@@ -24,6 +25,8 @@ public class TatzelwurmActivity extends AppCompatActivity {
 
     // Layout
     private ConstraintLayout GameView;
+    // Message
+    private int messageIndex = 0;
 
     // Screen information
     private int screenWidth;
@@ -31,7 +34,6 @@ public class TatzelwurmActivity extends AppCompatActivity {
     // screen half will be used for player controls
     private int screenHalf;
 
-    // TODO: final public for temporary convenient
     // Drawables
     public Drawable PlayerHead;
     public Drawable PlayerPreTail;
@@ -67,7 +69,7 @@ public class TatzelwurmActivity extends AppCompatActivity {
         this.screenHeight = size.y;
         this.screenHalf = this.screenWidth/2;
 
-        this.PlayerHead = getResources().getDrawable(R.drawable.head);
+        this.PlayerHead = getResources().getDrawable(R.drawable.head_5);
         this.PlayerBody = getResources().getDrawable(R.drawable.body_5);
         this.PlayerTail = getResources().getDrawable(R.drawable.tail);
         this.PlayerPreTail = getResources().getDrawable(R.drawable.pretail);
@@ -88,6 +90,10 @@ public class TatzelwurmActivity extends AppCompatActivity {
 
         // get game view and call post render method
         GameView = findViewById(R.id.gameView);
+        Typeface BayeuxType = Typeface.createFromAsset(getAssets(),"fonts/bayeux.ttf");
+        Typeface AugustaType = Typeface.createFromAsset(getAssets(),"fonts/augusta.ttf");
+        this.getMessageView().setTypeface(BayeuxType);
+        this.getScoreView().setTypeface(AugustaType);
 
         GameView.post(new Runnable() {
             @Override
@@ -112,11 +118,14 @@ public class TatzelwurmActivity extends AppCompatActivity {
      */
     public String getMessage() {
         String[] messages = getResources().getStringArray(R.array.messages);
-        return messages[new Random().nextInt(messages.length)];
+        return messages[messageIndex++ % messages.length];
+        //return messages[new Random().nextInt(messages.length)];
     }
 
     // lazy loads
-    public Animation getFadeOutInOut() { return AnimationUtils.loadAnimation(this, R.anim.fadeoutinout); }
+    public Animation getFadeOut() { return AnimationUtils.loadAnimation(this, R.anim.fadeout); }
+
+    public Animation getFadeIn() { return AnimationUtils.loadAnimation(this, R.anim.fadein); }
 
     public Drawable getEggTop() { return getResources().getDrawable(R.drawable.eggtop); }
 
@@ -134,6 +143,10 @@ public class TatzelwurmActivity extends AppCompatActivity {
 
     public TextView getMessageView() {
         return (TextView)findViewById(R.id.messageTextView);
+    }
+
+    public TextView getScoreView() {
+        return (TextView)findViewById(R.id.scoreTextView);
     }
 
     /**

@@ -40,10 +40,7 @@ public abstract class Touchable {
             @Override
             public void onAnimationRepeat(Animator animation) {}
         });
-        // TODO: set duration to individual values of child class, depending of current difficulty
         this.RighToLeftAnim.setDuration(3000);
-        // TODO: create delay value randomly, depending of current difficulty
-        this.RighToLeftAnim.setStartDelay(0);
         this.RighToLeftAnim.setInterpolator(new LinearInterpolator());
 
         RighToLeftAnim.start();

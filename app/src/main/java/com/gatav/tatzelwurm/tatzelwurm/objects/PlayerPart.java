@@ -35,7 +35,6 @@ public class PlayerPart {
 
         // set drawable
         // head
-        // TODO: create and change drawables // Sorry mache ich noch lol
         if (type == 0) {
             this.PartImageView.setImageDrawable(CurrentGame.getActivity().PlayerHead);
         }
@@ -130,7 +129,6 @@ public class PlayerPart {
 
         // the tatzelwurm will arrange on screen on start
         ObjectAnimator StartAnimArrangeX = ObjectAnimator.ofFloat(this.PartImageView, "X", this.PartImageView.getX(), positionX);
-        // TODO: review if the numbers will be set here or anywhere else
         StartAnimArrangeX.setDuration(250 + delay);
 
         // go!
